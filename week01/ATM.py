@@ -12,7 +12,7 @@ while user_input != "EXIT":
         print("You have deposited", amount ," Rupees in your account")
     elif user_input == 'W':
         amount = int(input("Enter the amount to withdraw"))
-        if(amount <= balance):
+        if amount <= balance:
             balance -= amount
             print("You have withdrawn", amount," Rupees from your account")
         else :
