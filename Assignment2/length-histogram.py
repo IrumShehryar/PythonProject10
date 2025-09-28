@@ -13,11 +13,11 @@ import pandas as pd
 INCH_CM = 2.54
 POUND_KG = 0.453592
 
-df = pd.read_csv('../AI with Python/weight-height.csv')
-data = df.to_numpy()
-print(df,data)
-length = data[:,1]
-weight = data[:,2]
+df = pd.read_csv('../AI with Python/weight-height.csv',names=["length","weight"])
+#data = df.to_numpy()
+#print(df,data)
+length = df["length"]
+weight = df["weight"]
 #print("length:",length,"weight",weight)
 inches_to_cm = length * INCH_CM
 pounds_to_kgs = weight* POUND_KG
