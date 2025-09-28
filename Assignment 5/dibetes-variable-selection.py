@@ -4,28 +4,32 @@ in addition to bmi and s5.
 a) Which variable would you add next? Why? 
 b) How does adding it affect the model's performance? Compute metrics and compare to having just bmi 
 and s5. 
-d) Does it help if you add even more variables? 
+c) Does it help if you add even more variables?
 Include your own findings and explanations in code comments or inside triple quotes.
 Each step above is worth a point. You need 2 points in order to complete this problem. 
 
 ------------------------------------------------------------------------------------------------------------------------------------
 FINDINGS:
-(a) I am choosing 'bp' as the Next variable as it has the strongest correlation to the target after bmi and s5.
+
+(a) I am choosing 'bp' as the Next variable as it has the strongest correlation to the target after bmi and s5. It can
+also be seen through scatter plot that bp shows an upward trend in relation to target.
 (b) Adding 'bp' gives small but consistent improvements in test R2 and RMSE. The R2 increases slightly and
 RMSE decreases slightly.
 
 EXPLANATION:
-(d) Using bmi and s5 as the baseline, adding bp slightly improves performance. Test metrics  R2(bmi+s5) move from 0.482 to 0.491
-and RMSE(bmi+s5) decreases from 57.176 to 56.626 (bmi+s5+bp).
-Adding s4 does not help: the test metrics become R2 = 0.480 and RMSE = 57.260 (bmi+s5+bp+s4), which is worse than with bp.
+
+(c) Using bmi and s5 as the baseline, adding bp slightly improves performance. Test metrics  R2(bmi+s5) move from 0.482
+to 0.491 and RMSE(bmi+s5) decreases from 57.176 to 56.626 (bmi+s5+bp).
+Adding s4 does not help as the test metrics become R2 = 0.480 and RMSE = 57.260 (bmi+s5+bp+s4), which is worse than with bp.
+The s4 scatter plot shows almost no clear linear relationship with the target. The vertical stripes mean many patients share
+the same triglyceride levels, but their diabetes progression varies a lot. This means s4 alone is not a strong predictor
+of the diabetes outcome.
 
 CONCLUSION:
 Therefore, based on these results, adding more variables is not benefiting us; three variables (bmi, s5, bp) are sufficient here.
 -------------------------------------------------------------------------------------------------------------------------------------
-
 """
 import pandas as pd
-import  numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.datasets import load_diabetes
@@ -42,15 +46,28 @@ df = data['frame']
 sns.heatmap(data=df.corr().round(2),annot= True)
 plt.show()
 
-plt.subplot(1,2,1)
+plt.subplot(2,2,1)
 plt.scatter(df['bmi'],df['target'])
 plt.xlabel('BMI')
 plt.ylabel('Target')
 
-plt.subplot(1,2,2)
+plt.subplot(2,2,2)
 plt.scatter(df['s5'],df['target'])
 plt.xlabel('s5')
 plt.ylabel('Target')
+
+plt.subplot(2,2,3)
+plt.scatter(df['bp'],df['target'])
+plt.xlabel('Bp')
+plt.ylabel('Target')
+
+plt.subplot(2,2,4)
+plt.scatter(df['s4'],df['target'])
+plt.xlabel('s4')
+plt.ylabel('Target')
+
+
+plt.tight_layout()
 plt.show()
 
 x= pd.DataFrame(df[['bmi','s5']],columns = ['bmi','s5'])
@@ -84,8 +101,8 @@ rmse_test_bp  = root_mean_squared_error(y_testBp,  y_testBp_predict)
 r2_train_bp   = r2_score(y_trainBp, y_trainBp_predict)
 r2_test_bp    = r2_score(y_testBp,  y_testBp_predict)
 
-
-# Next adding s4(the next strong correlation with target after bmi,s5 and bp) and calculating the metrices to see if r2 and rmse shows improvements
+# Next adding s4(the next highest heat score with target after bmi,s5 and bp) and calculating the metrices to confirm it
+# does not contribute in diabetes prediction
 
 x_bp_s4 = df[['bmi', 's5', 'bp', 's4']].copy()
 x_trainBpS4, x_testBpS4, y_trainBpS4, y_testBpS4 = train_test_split(x_bp_s4, y, test_size=0.2, random_state=5)

@@ -18,10 +18,8 @@ Train R² = 0.944, Test R² = 0.968; Train RMSE =9,359, Test RMSE =7,074 (same u
 EXPLANATION:
 
 Using R&D Spend and Marketing Spend to predict Profit gives a strong linear model.
-
-Test performance is excellent: R2 =0.968 and RMSE =7,074 (in profit units). That means the model explains
-about 97% of the variance on unseen data, with an average prediction error of about 7k.
-
+Test performance is excellent: R2 =0.968 and RMSE =7,074 (in profit units). That means the model
+explains about 97% of the variance on unseen data, with an average prediction error of about 7k.
 Train performance is also strong: R2 = 0.944, RMSE = 9,359.
 
 CONCLUSION: Profit rises mostly with R&D and Marketing spend.
@@ -30,7 +28,6 @@ CONCLUSION: Profit rises mostly with R&D and Marketing spend.
 """
 
 import pandas as pd
-import  numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
